@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.4.0">
+  <bpmn:process id="TaskNotification" name="Task Notification. Send notification to RabbitMQ" isExecutable="true" camunda:versionTag="1.0">
+    <bpmn:documentation>This process receives bpmn messages from other processes (for external tasks) and sends rabbitmq message. After that external process knows (by listening corresponding queue) that it has to process some task in Camunda</bpmn:documentation>
+    <bpmn:endEvent id="EndEventProcessEnded" name="Process ended">
+      <bpmn:incoming>Flow_1tyr0ou</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow1" sourceRef="StartEventProcessStarted" targetRef="ActivitySendToRabbitMQ" />
+    <bpmn:startEvent id="StartEventProcessStarted" name="Process started">
+      <bpmn:outgoing>SequenceFlow1</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1a010vc" messageRef="Message_1rtd7zs" />
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1tyr0ou" sourceRef="ActivitySendToRabbitMQ" targetRef="EndEventProcessEnded" />
+    <bpmn:serviceTask id="ActivitySendToRabbitMQ" name="Send To RabbitMQ" camunda:class="com.sharavara.camunda.TaskNotification.SendToRabbitMQ">
+      <bpmn:incoming>SequenceFlow1</bpmn:incoming>
+      <bpmn:outgoing>Flow_1tyr0ou</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmn:message id="Message_1rtd7zs" name="CAMUNDANEWTASK" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="TaskNotification">
+      <bpmndi:BPMNEdge id="Flow_1tyr0ou_di" bpmnElement="Flow_1tyr0ou">
+        <di:waypoint x="420" y="120" />
+        <di:waypoint x="492" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_08va5r8_di" bpmnElement="SequenceFlow1">
+        <di:waypoint x="248" y="120" />
+        <di:waypoint x="320" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="337.5" y="110" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_1oxfcc0_di" bpmnElement="ActivitySendToRabbitMQ">
+        <dc:Bounds x="320" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_0fkea3f_di" bpmnElement="EndEventProcessEnded">
+        <dc:Bounds x="492" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="473" y="138" width="74" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1z0hv1b_di" bpmnElement="StartEventProcessStarted">
+        <dc:Bounds x="212" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="192" y="138" width="77" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
