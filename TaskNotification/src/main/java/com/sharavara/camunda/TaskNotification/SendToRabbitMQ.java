@@ -21,8 +21,8 @@ public class SendToRabbitMQ implements JavaDelegate {
 	private static final String RMQ_EXCHANGE_NAME = "CAMUNDA.TASKS";
 	private static final String RMQ_HOST = "192.168.1.115";
 	private static final int RMQ_PORT = 5672;
-	private static final String RMQ_USER = "rabbit";
-	private static final String RMQ_PASSWORD = "RabbitHole";
+	private static final String RMQ_USER = "guest";
+	private static final String RMQ_PASSWORD = "guest";
 
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
@@ -38,7 +38,8 @@ public class SendToRabbitMQ implements JavaDelegate {
 		if (processBusinessKey == null)
 			processBusinessKey = "NULL";
 
-		LOGGER.info("Sending message to RabbitMQ. | Process Instance: " + processInstanceId + " | Task: " + currentActivityId);
+		LOGGER.info("Sending message to RabbitMQ. | Process Instance: " + processInstanceId + " | Task: "
+				+ currentActivityId);
 		ConnectionFactory factory = new ConnectionFactory();
 		factory.setHost(RMQ_HOST);
 		factory.setPort(RMQ_PORT);
@@ -60,11 +61,11 @@ public class SendToRabbitMQ implements JavaDelegate {
 
 	}
 
-	public static String currentTime(){  
-        Date date = Calendar.getInstance().getTime();  
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");  
-        String strDate = dateFormat.format(date);
-		return strDate;  
-         
-}  
+	public static String currentTime() {
+		Date date = Calendar.getInstance().getTime();
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+		String strDate = dateFormat.format(date);
+		return strDate;
+
+	}
 }
