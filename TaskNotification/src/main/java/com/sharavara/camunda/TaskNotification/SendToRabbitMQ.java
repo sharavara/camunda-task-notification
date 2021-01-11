@@ -38,7 +38,7 @@ public class SendToRabbitMQ implements JavaDelegate {
 		if (processBusinessKey == null)
 			processBusinessKey = "NULL";
 
-		LOGGER.info("Sending message to RabbitMQ. | Process Instance: " + processInstanceId + " | Task: "
+		LOGGER.info("Sending message to RabbitMQ. | Process Instance: " + processInstanceId + " | cСrrentActivityId: "
 				+ currentActivityId);
 		ConnectionFactory factory = new ConnectionFactory();
 		factory.setHost(RMQ_HOST);

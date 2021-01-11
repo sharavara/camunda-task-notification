@@ -1,4 +1,4 @@
-# Camunda microservice architecture (event driven approach)
+# Camunda micro-service architecture (event driven approach)
 
 
 ## Node Start Listener
